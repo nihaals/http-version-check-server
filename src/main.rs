@@ -1,14 +1,14 @@
 use hyper::service::{make_service_fn, service_fn};
-use hyper::{Body, Request, Response, Server};
+use hyper::{Body, Request, Response, Server, Version};
 use std::{env, net::SocketAddr};
 
 async fn handler(req: Request<Body>) -> Result<Response<Body>, hyper::Error> {
     let http_version = match req.version() {
-        hyper::Version::HTTP_09 => "HTTP/0.9",
-        hyper::Version::HTTP_10 => "HTTP/1.0",
-        hyper::Version::HTTP_11 => "HTTP/1.1",
-        hyper::Version::HTTP_2 => "HTTP/2.0",
-        hyper::Version::HTTP_3 => "HTTP/3.0",
+        Version::HTTP_09 => "HTTP/0.9",
+        Version::HTTP_10 => "HTTP/1.0",
+        Version::HTTP_11 => "HTTP/1.1",
+        Version::HTTP_2 => "HTTP/2.0",
+        Version::HTTP_3 => "HTTP/3.0",
         _ => "Unknown",
     };
 
