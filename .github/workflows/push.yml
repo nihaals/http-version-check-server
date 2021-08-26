@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    name: Build
+    if: github.event_name != 'pull_request' || (github.event_name == 'pull_request' && github.event.base.repo.id != github.event.head.repo.id)
+    strategy:
+      matrix:
+        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache Cargo
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+      - name: Build
+        run: cargo build --release
+      - name: Get target
+        id: get-target
+        run: |
+          (eval $(rustc --print cfg | grep target); echo "::set-output name=target::${target_arch}-${target_vendor}-${target_os}-${target_env}")
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.get-target.outputs.target }}
+          path: target/release/http-version-check-server*
