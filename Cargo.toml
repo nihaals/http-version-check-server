@@ -1,7 +1,12 @@
 [package]
 name = "http-version-check-server"
-version = "0.1.0"
 edition = "2018"
+version = "0.1.0"
+license = "MIT"
+description = "A simple HTTP server that sends the HTTP version used."
+readme = "README.md"
+homepage = "https://github.com/nihaals/http-version-check-server"
+repository = "https://github.com/nihaals/http-version-check-server"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }
