@@ -17,8 +17,8 @@ async fn handler(req: Request<Body>) -> Result<Response<Body>, hyper::Error> {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    let host = env::var("HOST").unwrap_or("127.0.0.1".to_string());
-    let port = env::var("PORT").unwrap_or("8000".to_string());
+    let host = env::var("HOST").unwrap_or_else(|_| "127.0.0.1".to_string());
+    let port = env::var("PORT").unwrap_or_else(|_| "8000".to_string());
     let addr: SocketAddr = format!("{}:{}", host, port).parse().unwrap();
 
     let service = make_service_fn(|_| async { Ok::<_, hyper::Error>(service_fn(handler)) });
