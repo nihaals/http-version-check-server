@@ -9,5 +9,5 @@ homepage = "https://github.com/nihaals/http-version-check-server"
 repository = "https://github.com/nihaals/http-version-check-server"
 
 [dependencies]
-tokio = { version = "1", features = ["full"] }
 hyper = { version = "0.14", features = ["full"] }
+tokio = { version = "1", features = ["full"] }
