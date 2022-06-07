@@ -1,6 +1,7 @@
 use hyper::service::{make_service_fn, service_fn};
 use hyper::{Body, Request, Response, Server, Version};
-use std::{env, net::SocketAddr};
+use std::env;
+use std::net::SocketAddr;
 
 async fn handler(req: Request<Body>) -> Result<Response<Body>, hyper::Error> {
     let http_version = match req.version() {
